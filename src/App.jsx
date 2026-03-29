@@ -7,17 +7,20 @@ export default function App() {
   const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
-    fetch("URL_API_GOOGLE_SCRIPT")
-      .then(res => res.json())
-      .then(res => {
-        setData(res);
-        setFiltered(res);
-      });
+    // 🔥 DATA DUMMY (BIAR TIDAK ERROR SAAT DEPLOY)
+    const dummy = [
+      { "No SPJ": "001", "Tanggal": "2025-01-01", "Status": "Cair" },
+      { "No SPJ": "002", "Tanggal": "2025-01-02", "Status": "Proses" },
+      { "No SPJ": "003", "Tanggal": "2025-01-03", "Status": "Ditolak" }
+    ];
+
+    setData(dummy);
+    setFiltered(dummy);
   }, []);
 
   const handleSearch = (keyword) => {
     const result = data.filter(item =>
-      item["No SPJ"]?.toLowerCase().includes(keyword.toLowerCase())
+      item["No SPJ"].toLowerCase().includes(keyword.toLowerCase())
     );
     setFiltered(result);
   };
@@ -25,6 +28,7 @@ export default function App() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">📊 PASTI-SPJ Dashboard</h1>
+
       <SearchBar onSearch={handleSearch} />
       <TableSPJ data={filtered} />
     </div>
